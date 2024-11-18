@@ -9,4 +9,4 @@ $AWS_PROFILE="default"
 aws cloudformation package --template ./cfn-students.yml --s3-bucket $MY_DEV_BUCKET --output-template ./cfn-students-export.yml
 
 # Deploy the package
-sam deploy --template-file ./cfn-students-export.yml --stack-name $STACK_NAME --capabilities CAPABILITY_NAMED_IAM
+sam deploy --template-file ./cfn-students-export.yml --stack-name $STACK_NAME --capabilities CAPABILITY_NAMED_IAM --region $MY_REGION
