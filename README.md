@@ -6,11 +6,6 @@ We integrate various applications to gather information and map a detailed overv
 Use advanced technologies and contribute to groundbreaking space research.  
 Starship_58 is waiting for you to make history!
 
-![HTF-2024-Architecture](./HTF-2024-Architecture.png)
-
-All components outlined with a rectangle are already provided for you to save some time, but you will need them. The other components require setup, configuration or integration from your end.
-
-
 ## Requirements
 ### Install AWS CLI
 In order to be able to communicate with the AWS cloud, you need to install its CLI.  
