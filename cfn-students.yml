@@ -33,6 +33,9 @@ Parameters:
   NasaApiKey:
     Default: <NASA API KEY>
     Type: String
+  S3Bucket:
+    Default: htf24-s3-bucket
+    Type: String
 
 Resources:
   # Lambda Challenge 1
@@ -164,6 +167,8 @@ Resources:
         Variables:
           TeamName:
             Ref: TeamName # BucketName automatisch toevoegen aan env variabelen
+          S3Bucket:
+            Ref: S3Bucket
       Policies:
         - Statement:
           - Effect: Allow
