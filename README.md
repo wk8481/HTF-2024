@@ -100,7 +100,7 @@ Otherwise, your safe passage could become compromised, and we don't want to lose
 Your biggest enemy are *Geomagnetic Storms*, so you need to check the forecasts in advance.  
 Luckily the *Space Weather Prediction Center (NOAA)* continuously monitors a whole set of data and compresses it into 1 simple file per day.  
 Since we still need to learn how to interpret this file, we want to receive those from you and save them on the Mothership in order to study them.  
-Use a [Lambda](https://aws.amazon.com/lambda/) function to go fetch the latest file on the *Space Weather Prediction Center FTP server*.  
+Use a [Lambda](https://aws.amazon.com/lambda/) function to go fetch the latest file on the [Space Weather Prediction Center FTP server](ftp.swpc.noaa.gov/pub/forecasts/geomag_forecast).  
 1 file per day will be enough.  
 Find a way to save this file to the Motherships' [S3 Bucket](https://aws.amazon.com/pm/serv-s3/).
 
@@ -111,7 +111,7 @@ Because we are all so far apart from eachother, it is important to keep the team
 Because we are all greate NASA fans, the team wants to see the NASA Picture of the Day in their mailbox first thing in the morning.  
 The documentation of their API can be read [here](https://api.nasa.gov/).  
 Make sure to request your own credentials and not use the demo credentials as this will get ratelimited after a while.  
-Make the API call to NASA to get the picture, download the file from the endpoint returned in the response, and send an email to the following address: samuel.vandecasteele@i8c.be.
+Make the API call to NASA to get the picture, download the file from the endpoint returned in the response, and send an email to an email address you created on TempMail.
 
 **Note**: There is a great chance that your account or domain will not get verified in time, meaning mails will never get delivered. For the sake of the Hackathon, you are allowed to create a temporary email address using [TempMail](https://temp-mail.org/en) and send emails to that address.
 
