@@ -1,5 +1,5 @@
 #!/bin/bash
-STACK_NAME="HTF24-i8c-Peerlro-Stack"
+STACK_NAME="HTF24-i8c-TeamName-Stack"
 MY_REGION="eu-central-1"
 MY_DEV_BUCKET="htf24-cloudformation-bucket"
 

@@ -10,28 +10,28 @@ Globals:
 
 Parameters:
   TeamName:
-    Default: Peerlro
+    Default: <TeamName>
     Type: String
   DiscordWebhook:
-    Default: https://discordapp.com/api/webhooks/1299045791054303284/xetolM8Wr4vi0fIhUg2qVOnnHPtY7quS8V0PdWJc6ZOUeg4GsMgQnoH41daNQOBt0dgK
+    Default: <Discord Webhook>
     Type: String
   GeminiApiKey:
-    Default: AIzaSyAfoV81Fv8JTAggMhQCPqaumR1KguKM92k
+    Default: <Gemini API Key>
     Type: String
   ClickupListId:
-    Default: 901507316946
+    Default: <Clickup ID>
     Type: String
   ClickupApiToken:
-    Default: pk_42539853_ZUMPIQAAAGXSRLTGURA9LPUOHW6LLYGV
+    Default: <Clickup API Key>
     Type: String
   MailgunApiKey:
-    Default: dc202a456409d71dbc144950f44349bb-79295dd0-e690dd15
+    Default: <Mailgun API Key>
     Type: String
   MailgunUrl:
-    Default: https://api.mailgun.net/v3/sandbox99346df11b3b43f790ca6f6a3439ee15.mailgun.org/messages
+    Default: <Mailgun URL>
     Type: String
   NasaApiKey:
-    Default: MRVfSzANU4wGl74IoTOD0jdxQefgN2hCMoHwI8mv
+    Default: <NASA API KEY>
     Type: String
 
 Resources:

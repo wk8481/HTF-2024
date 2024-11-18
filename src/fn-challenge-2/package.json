@@ -1,0 +1,16 @@
+{
+  "name": "fn-challenge-2",
+  "version": "1.0.0",
+  "main": "lambda.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@aws-sdk/client-sqs": "^3.693.0",
+    "aws-xray-sdk-core": "^3.10.2",
+    "axios": "^1.7.7"
+  }
+}
