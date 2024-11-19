@@ -53,7 +53,7 @@ List:
 At the top of the files, there is a parameter called "TeamName", enter your team name in the *Default* attribute (excluding spaces).  
 Example: "Hack Tuah" becomes "HackTuah".  
 
-You will also need to have an API key for both SendGrid and Teams.
+Please also do not forget to create the other API keys and such and add them to the Parameters in this file.
 
 ### General Notice
 Because this is a hackathon, keep in mind that we are using free tiers of many of the tools that you will be integrating with.  
