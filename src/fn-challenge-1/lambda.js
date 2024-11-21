@@ -17,11 +17,11 @@ exports.handler = async (event) => {
     console.log(JSON.stringify(event));
 
     // Retrieve the encoded message from the event
-    let encodedMessage;
+    let encodedMessage = "-.-. --- -. --. .-. .- - ..- .-.. .- - .. --- -. ... --..-- / -.-- --- ..- / -- .- -. .- --. . -.. / - --- / -.. . -.-. --- -.. . / - .... .. ... / -- . ... ... .- --. . .-.-.- / .. ..-. / -.-- --- ..- / ..-. .. -. -.. / .- / .-- .- -.-- / - --- / ... . -. -.. / - .... .. ... / - --- / -.-- --- ..- .-. / ... .--. .- -.-. . ... .... .. .--. .----. ... / . -. - .. .-. . / - . .- -- / ...- .. .- / -.. .. ... -.-. --- .-. -.. / .-. . .-.. .. .- -... .-.. -.-- --..-- / -.-- --- ..- / .... .- ...- . / -.-. --- -- .--. .-.. . - . -.. / .-.. . ...- . .-.. / .---- / .- -. -.. / -.-. .- -. / -. --- .-- / .--. .-. --- -.-. . . -.. .-.-.-";
     
     try {
         // Decode your message
-        let decodedMessage;
+        let decodedMessage = morse.decode(encodedMessage);
 
         // Send to Discord
         await sendMessageToDiscord(decodedMessage)
@@ -33,4 +33,9 @@ exports.handler = async (event) => {
 
 async function sendMessageToDiscord(message) {
     // Send "${TeamName}: ${message}"
+    const discordMessage = `${TeamName}: ${message}`;
+    const response = await axios.post(DiscordWebhook, {
+        content: discordMessage
+    });
+    console.log(response.data);
 }

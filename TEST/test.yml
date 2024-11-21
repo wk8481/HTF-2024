@@ -16,22 +16,22 @@ Parameters:
     Default: https://discord.com/api/webhooks/1308357975445999707/F88lNaQfZlxNibsiZz2l553-DtClHOP7F5Jq_my1mBkORmne1Z_rLJ-ZLolqjYcDBB_k
     Type: String
   GeminiApiKey:
-    Default: AIzaSyD6izl6Kl7rPNfTj17dQZCYxs1PhzrO-c4
+    Default: <Gemini API Key>
     Type: String
   ClickupListId:
-    Default: BJX9DJJHK1W4I2ZDCQMG0LBHPDQMQ5C40NF81BR2MEJKAJYH3VE1U7GGQK1K2U3O
+    Default: <Clickup ID>
     Type: String
   ClickupApiToken:
-    Default: ARW2GM7519ZCV1YXSM633O5E98AHD0H2
+    Default: <Clickup API Key>
     Type: String
   MailgunApiKey:
-    Default: 69ce9e6a14167ba4c313e7a694182b07-6df690bb-cd313a07
+    Default: <Mailgun API Key>
     Type: String
   MailgunUrl:
-    Default: https://api.mailgun.net/v3/sandbox9725c76db9494c45b2cb18a9bd029852.mailgun.org/messages
+    Default: <Mailgun URL>
     Type: String
   NasaApiKey:
-    Default: IAZr2FTp50LjWHHfsTxImiSemwGzj7PsRCakdPvX
+    Default: <NASA API KEY>
     Type: String
   S3Bucket:
     Default: htf24-s3-bucket2
@@ -225,9 +225,9 @@ Resources:
           Ref: TeamName
         Project: HTF24
         Service: Lambda
-#
-#  # Challenge 4 Lambda Trigger <- Not really needed I think
-#
+
+  # Challenge 4 Lambda Trigger <- Not really needed I think
+
   # Lambda Challenge 5
   Challenge5Lambda:
     Type: AWS::Serverless::Function
