@@ -1,0 +1,270 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for the i8c Hack The Future 2024 Challenge (Team <TeamName>)
+
+Globals:
+  Function:
+    Timeout: 10
+    Tracing: Active
+
+Parameters:
+  TeamName:
+    Default: TheCloudonaut
+    Type: String
+  DiscordWebhook:
+    Default: https://discord.com/api/webhooks/1308357975445999707/F88lNaQfZlxNibsiZz2l553-DtClHOP7F5Jq_my1mBkORmne1Z_rLJ-ZLolqjYcDBB_k
+    Type: String
+  GeminiApiKey:
+    Default: <Gemini API Key>
+    Type: String
+  ClickupListId:
+    Default: <Clickup ID>
+    Type: String
+  ClickupApiToken:
+    Default: <Clickup API Key>
+    Type: String
+  MailgunApiKey:
+    Default: <Mailgun API Key>
+    Type: String
+  MailgunUrl:
+    Default: <Mailgun URL>
+    Type: String
+  NasaApiKey:
+    Default: <NASA API KEY>
+    Type: String
+  S3Bucket:
+    Default: htf24-s3-bucket2
+    Type: String
+
+Resources:
+  # Lambda Challenge 1
+  Challenge1Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: HTF-24-${TeamName}-Lambda-Challenge1
+      CodeUri: src/fn-challenge-1/
+      Handler: lambda.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TeamName:
+            Ref: TeamName
+          DiscordWebhook:
+            Ref: DiscordWebhook
+      Policies:
+        - Statement:
+          - Effect: Allow
+            Action: events:*
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - 'xray:PutTraceSegments'
+              - 'xray:PutTelemetryRecords'
+            Resource: '*'
+      Tags:
+        Owner:
+          Ref: TeamName
+        Project: HTF24
+        Service: Lambda
+
+  # Challenge 1 Lambda Trigger
+  EventBridgeToLambdaChallenge1Rule:
+    Type: AWS::Events::Rule
+    Properties:
+      EventBusName:
+        Fn::ImportValue: HTF24-i8c-Stack-EventBridgeBusName
+      State: ENABLED
+      EventPattern:
+        source:
+          - HTF24
+        detail-type:
+          - Fn::Sub: ToBeUsedBy-${TeamName}
+      Targets:
+        - Arn:
+            Fn::GetAtt: [ Challenge1Lambda, Arn ]
+          Id: Challenge1Lambda
+
+  # Challenge 1 Lambda Invoke Permissions
+  PermissionForEventBridgeRuleToInvokeChallenge1:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: Challenge1Lambda
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt: [ EventBridgeToLambdaChallenge1Rule, Arn ]
+
+  # Lambda Challenge 2
+  Challenge2Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: HTF-24-${TeamName}-Lambda-Challenge2
+      CodeUri: src/fn-challenge-2/
+      Handler: lambda.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TeamName:
+            Ref: TeamName
+          SQS:
+            Fn::ImportValue: HTF24-i8c-Stack-SQS
+      Policies:
+        - Statement:
+          - Effect: Allow
+            Action: events:*
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - 'xray:PutTraceSegments'
+              - 'xray:PutTelemetryRecords'
+            Resource: '*'
+          - Effect: Allow
+            Action: sqs:SendMessage
+            Resource: '*'
+      Tags:
+        Owner:
+          Ref: TeamName
+        Project: HTF24
+        Service: Lambda
+
+
+  # Challenge 2 Lambda Trigger
+  EventBridgeToLambdaChallenge2Rule:
+    Type: AWS::Events::Rule
+    Properties:
+      State: ENABLED
+      Targets:
+        - Arn:
+            Fn::GetAtt: [ Challenge2Lambda, Arn ]
+          Id: Challenge2Lambda
+      ScheduleExpression: rate(15 minutes)
+
+  # Challenge 2 Lambda Invoke Permissions
+  PermissionForEventBridgeRuleToInvokeChallenge2:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: Challenge2Lambda
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt: [ EventBridgeToLambdaChallenge2Rule, Arn ]
+
+  # Lambda Challenge 3
+  Challenge3Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: HTF-24-${TeamName}-Lambda-Challenge3
+      CodeUri: src/fn-challenge-3/
+      Handler: lambda.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TeamName:
+            Ref: TeamName # BucketName automatisch toevoegen aan env variabelen
+          S3Bucket:
+            Ref: S3Bucket
+      Policies:
+        - Statement:
+          - Effect: Allow
+            Action: events:*
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - 'xray:PutTraceSegments'
+              - 'xray:PutTelemetryRecords'
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - s3:PutObject
+            Resource: '*'
+      Tags:
+        Owner:
+          Ref: TeamName
+        Project: HTF24
+        Service: Lambda
+
+  # Challenge 3 Lambda Trigger <- Not really needed I think
+
+  # Lambda Challenge 4
+  Challenge4Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: HTF-24-${TeamName}-Lambda-Challenge4
+      CodeUri: src/fn-challenge-4/
+      Handler: lambda.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TeamName:
+            Ref: TeamName
+          MailgunApiKey:
+            Ref: MailgunApiKey
+          MailgunUrl:
+            Ref: MailgunUrl
+          NasaApiKey:
+            Ref: NasaApiKey
+      Policies:
+        - Statement:
+          - Effect: Allow
+            Action: events:*
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - 'xray:PutTraceSegments'
+              - 'xray:PutTelemetryRecords'
+            Resource: '*'
+      Tags:
+        Owner:
+          Ref: TeamName
+        Project: HTF24
+        Service: Lambda
+
+  # Challenge 4 Lambda Trigger <- Not really needed I think
+
+  # Lambda Challenge 5
+  Challenge5Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: HTF-24-${TeamName}-Lambda-Challenge5
+      CodeUri: src/fn-challenge-5/
+      Handler: lambda.handler
+      Runtime: nodejs20.x
+      Environment:
+        Variables:
+          TeamName:
+            Ref: TeamName
+          GeminiApiKey:
+            Ref: GeminiApiKey
+          ClickupListId:
+            Ref: ClickupListId
+          ClickupApiToken:
+            Ref: ClickupApiToken
+      Policies:
+        - Statement:
+          - Effect: Allow
+            Action: events:*
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - 'xray:PutTraceSegments'
+              - 'xray:PutTelemetryRecords'
+            Resource: '*'
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+            Resource: '*'
+      Tags:
+        Owner:
+          Ref: TeamName
+        Project: HTF24
+        Service: Lambda
+
+  # Challenge 5 Lambda Permissions <- Not Really needed I think
